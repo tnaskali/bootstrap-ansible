@@ -1,0 +1,50 @@
+name: Test Ansible Setup Script
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    strategy:
+      matrix:
+        os:
+          - macOS-latest
+          - ubuntu-latest
+          - windows-2025
+        include:
+          - os: macOS-latest
+            shell: zsh
+          - os: ubuntu-latest
+            shell: bash
+          - os: windows-2025
+            shell: wsl -- dos2unix <"$(wslpath '{0}')" | bash --noprofile --norc -euo pipefail
+    runs-on: ${{ matrix.os }}
+    defaults:
+      run:
+        shell: ${{ matrix.shell }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install WSL on Windows
+        if: runner.os == 'Windows'
+        shell: powershell
+        run: |
+          # Echo and run the provided WSL installer script
+          Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass -Force
+          & .\wsl\install.ps1
+
+      - name: Run setup script and tests under sh
+        run: |
+          set -eu
+          echo "Running setup with sh..."
+          /usr/bin/env sh $(cat "./ansible/install.sh")
+
+      - name: test Ansible installation
+        run: |
+          set -eu
+          echo "Testing Ansible installation..."
+          ansible --version
+          ansible localhost -m ping
