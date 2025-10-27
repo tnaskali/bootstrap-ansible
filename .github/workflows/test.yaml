@@ -36,7 +36,7 @@ jobs:
 
       - name: Run setup script and tests under sh
         run: |
-          /usr/bin/env sh -c $(cat "./ansible/install.sh")
+          /usr/bin/env bash -c $(cat "./ansible/install.sh")
 
       - name: test Ansible installation
         run: |
