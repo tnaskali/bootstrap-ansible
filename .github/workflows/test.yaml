@@ -32,11 +32,11 @@ jobs:
         if: runner.os == 'Windows'
         shell: powershell
         run: |
-          powershell -NoProfile -ExecutionPolicy Bypass -Command "iex (Get-Content '.\wsl\install.ps1' -Raw)"
+          & .\wsl\install.ps1
 
       - name: Run setup script and tests under sh
         run: |
-          /usr/bin/env bash -c $(cat "./ansible/install.sh")
+          /usr/bin/env sh ./ansible/install.sh
 
       - name: test Ansible installation
         run: |
