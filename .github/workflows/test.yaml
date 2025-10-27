@@ -32,19 +32,14 @@ jobs:
         if: runner.os == 'Windows'
         shell: powershell
         run: |
-          # Echo and run the provided WSL installer script
           Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass -Force
           & .\wsl\install.ps1
 
       - name: Run setup script and tests under sh
         run: |
-          set -eu
-          echo "Running setup with sh..."
-          /usr/bin/env sh $(cat "./ansible/install.sh")
+          /usr/bin/env sh -c $(cat "./ansible/install.sh")
 
       - name: test Ansible installation
         run: |
-          set -eu
-          echo "Testing Ansible installation..."
           ansible --version
           ansible localhost -m ping
