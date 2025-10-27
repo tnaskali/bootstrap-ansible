@@ -14,7 +14,7 @@ jobs:
           - windows-2025
         include:
           - os: macOS-latest
-            shell: zsh
+            shell: bash
           - os: ubuntu-latest
             shell: bash
           - os: windows-2025
@@ -32,8 +32,7 @@ jobs:
         if: runner.os == 'Windows'
         shell: powershell
         run: |
-          Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass -Force
-          & .\wsl\install.ps1
+          powershell -NoProfile -ExecutionPolicy Bypass -Command "iex (Get-Content '.\wsl\install.ps1' -Raw)"
 
       - name: Run setup script and tests under sh
         run: |
