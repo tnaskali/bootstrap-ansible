@@ -10,9 +10,6 @@
   - cloud-init documentation: https://documentation.ubuntu.com/wsl/latest/howto/cloud-init/
 #>
 
-# Install Ubuntu 22.04 under WSL without launching it
-wsl --install -d Ubuntu --no-launch
-
 # Prepare cloud-init user-data
 $cloudInitPath = "$env:USERPROFILE\.cloud-init"
 New-Item -ItemType Directory -Path $cloudInitPath -Force | Out-Null
@@ -47,4 +44,4 @@ packages:
 EOT
 "@ | Set-Content -Path "$cloudInitPath\Ubuntu.user-data"
 
-ubuntu install
+wsl --install -d Ubuntu
