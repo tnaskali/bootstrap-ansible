@@ -24,7 +24,7 @@ fi
 
 echo "📦 Installing or upgrading pipx using pip..."
 # Install pipx
-python3 -m pip install --user pipx
+python3 -m pip install --break-system-packages --user pipx
 # Adds pipx local binary directory to PATH
 python3 -m pipx ensurepath --force
 # Ensure pipx bin directory is on PATH for this session
