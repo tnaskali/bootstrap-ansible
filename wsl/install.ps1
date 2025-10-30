@@ -14,9 +14,20 @@
 $cloudInitPath = "$env:USERPROFILE\.cloud-init"
 New-Item -ItemType Directory -Path $cloudInitPath -Force | Out-Null
 
+# get the current user name
+$currentUser = $env:USERNAME
+# get the current user full name
+$currentUserFullName = (Get-LocalUser -Name $currentUser).FullName
+
 @"
 #cloud-config
 users:
+  - name: $currentUser
+    gecos: $currentUserFullName
+    primary_group: $currentUser
+    groups: [sudo]
+    sudo: ALL=(ALL) NOPASSWD:ALL
+    shell: /bin/bash
   - name: ansible
     gecos: Ansible User
     primary_group: ansible
@@ -31,6 +42,8 @@ write_files:
       systemd=true
       [network]
       generateResolvConf=false
+      [user]
+      default=$currentUser
   - path: /etc/resolv.conf
     content: |
       # CloudFlare DNS
@@ -44,4 +57,5 @@ packages:
 EOT
 "@ | Set-Content -Path "$cloudInitPath\Ubuntu.user-data"
 
-wsl --install -d Ubuntu
+wsl --install Ubuntu
+wsl -l -v
