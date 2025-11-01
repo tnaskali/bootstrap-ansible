@@ -40,10 +40,12 @@ jobs:
           whoami
           echo $SHELL
           uname -a
+          cat /etc/os-release
+          cat -t ./ansible/install.sh
 
       - name: Install Ansible
         run: |
-          /usr/bin/env bash -c "$(cat ./ansible/install.sh | dos2unix)"
+          /usr/bin/env bash -c "$(cat ./ansible/install.sh)"
 
       - name: Verify Ansible installation
         run: |
