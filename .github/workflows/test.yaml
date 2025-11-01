@@ -41,7 +41,7 @@ jobs:
 
       - name: Install Ansible
         run: |
-          /usr/bin/env bash -c "$(cat ./ansible/install.sh)"
+          /bin/bash -c "$(cat ./ansible/install.sh)"
           echo $PATH
           command -v ansible
 
