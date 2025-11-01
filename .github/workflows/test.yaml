@@ -37,7 +37,7 @@ jobs:
       - name: Verify WSL installation if on Windows
         if: runner.os == 'Windows'
         run: |
-          sudo apt-get install python-pip -y
+          sudo apt-get install python3-pip -y
           dos2unix ./ansible/install.sh
 
       - name: Install Ansible
