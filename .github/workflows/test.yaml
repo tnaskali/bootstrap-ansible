@@ -41,7 +41,7 @@ jobs:
           echo $SHELL
           uname -a
           cat /etc/os-release
-          cat -t ./ansible/install.sh
+          dos2unix ./ansible/install.sh
 
       - name: Install Ansible
         run: |
