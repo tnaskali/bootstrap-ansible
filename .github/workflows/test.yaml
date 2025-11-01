@@ -39,10 +39,11 @@ jobs:
         run: |
           whoami
           echo $SHELL
+          uname -a
 
       - name: Install Ansible
         run: |
-          /usr/bin/env bash -c "$(cat ./ansible/install.sh)"
+          /usr/bin/env bash -c "$(cat ./ansible/install.sh | dos2unix)"
 
       - name: Verify Ansible installation
         run: |
