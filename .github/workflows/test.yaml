@@ -34,16 +34,11 @@ jobs:
         run: |
           & .\wsl\install.ps1
 
-      - name: Verify WSL installation if on Windows
-        if: runner.os == 'Windows'
-        run: |
-          dos2unix ./ansible/install.sh
-
       - name: Install Ansible
         run: |
           /bin/bash -c "$(cat ./ansible/install.sh)"
-          echo $PATH
-          command -v ansible
+          source $HOME/.bashrc
+          source $HOME/.bash_profile
 
       - name: Verify Ansible installation
         run: |
