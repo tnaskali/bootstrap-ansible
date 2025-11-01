@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/env sh
 set -eu
 
 # -----------------------------------------------------------------------------
@@ -10,6 +10,22 @@ set -eu
 abort() {
   printf "%s\n" "$@" >&2
   exit 1
+}
+
+reload_shell_profile() {
+  if [ -f "$HOME/.bashrc" ]; then
+    . "$HOME/.bashrc"
+  elif [ -f "$HOME/.bash_profile" ]; then
+    . "$HOME/.bash_profile"
+  elif [ -f "$HOME/.zshrc" ]; then
+    . "$HOME/.zshrc"
+  elif [ -f "$HOME/.zprofile" ]; then
+    . "$HOME/.zprofile"
+  elif [ -f "$HOME/.profile" ]; then
+    . "$HOME/.profile"
+  else
+    abort "❌ Could not find a shell profile to reload."
+  fi
 }
 
 # Check for Python3
@@ -27,11 +43,12 @@ echo "📦 Installing or upgrading pipx using pip..."
 python3 -m pip install --break-system-packages --user pipx
 # Adds pipx local binary directory to PATH
 python3 -m pipx ensurepath --force
-# Force reload of shell profile to ensure PATH is updated for this session
-source "$HOME/.bashrc" 2>/dev/null || source "$HOME/.bash_profile" 2>/dev/null
 
 echo "📦 Installing ansible using pipx..."
-pipx install --include-deps --force ansible
+python3 -m pipx install --include-deps --force ansible
+
+# Force reload of shell profile to ensure PATH is updated for this session
+reload_shell_profile
 
 if ! command -v ansible >/dev/null 2>&1; then
   abort "❌ ansible not found."
