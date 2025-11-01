@@ -40,17 +40,8 @@ write_files:
     content: |
       [boot]
       systemd=true
-      [network]
-      generateResolvConf=false
       [user]
       default=$currentUser
-  - path: /etc/resolv.conf
-    content: |
-      # CloudFlare DNS
-      nameserver 1.1.1.1
-      nameserver 1.0.0.1
-      nameserver 2606:4700:4700::1111
-      nameserver 2606:4700:4700::1001
 
 packages:
   - dos2unix
