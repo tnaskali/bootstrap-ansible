@@ -43,6 +43,11 @@ echo "📦 Installing or upgrading pipx using pip..."
 python3 -m pip install --break-system-packages --user pipx
 # Adds pipx local binary directory to PATH
 python3 -m pipx ensurepath --force
+cat $HOME/.bashrc || true
+cat $HOME/.bash_profile || true
+cat $HOME/.profile || true
+echo $SHELL
+echo $PATH
 
 echo "📦 Installing ansible using pipx..."
 python3 -m pipx install --include-deps --force ansible
