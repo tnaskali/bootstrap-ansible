@@ -45,6 +45,8 @@ write_files:
 
 packages:
   - dos2unix
+  - python3-pip
+  - python3-venv
 "@ | Set-Content -Path "$cloudInitPath\Ubuntu.user-data"
 
 # wsl --install Ubuntu
