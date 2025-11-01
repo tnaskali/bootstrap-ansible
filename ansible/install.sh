@@ -27,8 +27,8 @@ echo "📦 Installing or upgrading pipx using pip..."
 python3 -m pip install --break-system-packages --user pipx
 # Adds pipx local binary directory to PATH
 python3 -m pipx ensurepath --force
-# Ensure pipx bin directory is on PATH for this session
-export PATH="$HOME/.local/bin:$PATH"
+# Force reload of shell profile to ensure PATH is updated for this session
+source "$HOME/.bashrc" 2>/dev/null || source "$HOME/.bash_profile" 2>/dev/null
 
 echo "📦 Installing ansible using pipx..."
 pipx install --include-deps --force ansible

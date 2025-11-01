@@ -37,8 +37,6 @@ jobs:
       - name: Install Ansible
         run: |
           /bin/bash -c "$(cat ./ansible/install.sh)"
-          source $HOME/.bashrc
-          source $HOME/.bash_profile
 
       - name: Verify Ansible installation
         run: |
