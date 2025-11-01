@@ -54,8 +54,9 @@ write_files:
 
 packages:
   - dos2unix
-EOT
 "@ | Set-Content -Path "$cloudInitPath\Ubuntu.user-data"
 
-wsl --install Ubuntu
-wsl -l -v
+# wsl --install Ubuntu
+winget install --id 9pdxgncfsczv --exact --source msstore --accept-source-agreements --accept-package-agreements
+
+ubuntu install

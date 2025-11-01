@@ -11,13 +11,13 @@ jobs:
         os:
           - macOS-latest
           - ubuntu-latest
-          - windows-2025
+          - windows-latest
         include:
           - os: macOS-latest
             shell: bash
           - os: ubuntu-latest
             shell: bash
-          - os: windows-2025
+          - os: windows-latest
             shell: wsl -- dos2unix <"$(wslpath '{0}')" | bash --noprofile --norc -euo pipefail
     runs-on: ${{ matrix.os }}
     defaults:
@@ -28,17 +28,18 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Install WSL on Windows
+      - name: Install WSL if on Windows
         if: runner.os == 'Windows'
         shell: powershell
         run: |
-          & .\wsl\install.ps1
+          echo $env:USERNAME
+          powerShell -Command "Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass -Force; & .\wsl\install.ps1"
 
-      - name: Run setup script and tests under sh
+      - name: Install Ansible
         run: |
           /usr/bin/env sh ./ansible/install.sh
 
-      - name: test Ansible installation
+      - name: Verify Ansible installation
         run: |
           ansible --version
           ansible localhost -m ping
