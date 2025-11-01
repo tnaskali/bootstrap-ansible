@@ -32,12 +32,17 @@ jobs:
         if: runner.os == 'Windows'
         shell: powershell
         run: |
-          echo $env:USERNAME
-          powerShell -Command "Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass -Force; & .\wsl\install.ps1"
+          & .\wsl\install.ps1"
+
+      - name: Verify WSL installation if on Windows
+        if: runner.os == 'Windows'
+        run: |
+          whoami
+          echo $SHELL
 
       - name: Install Ansible
         run: |
-          /usr/bin/env sh ./ansible/install.sh
+          /usr/bin/env bash -c "$(cat ./ansible/install.sh)"
 
       - name: Verify Ansible installation
         run: |
