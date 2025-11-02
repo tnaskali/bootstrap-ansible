@@ -33,12 +33,13 @@ jobs:
         shell: powershell
         run: |
           & .\wsl\install.ps1
+          echo "WSLENV=GITHUB_PATH/p" >> $env:GITHUB_ENV
 
       - name: Install Ansible
         run: |
           /usr/bin/env sh -c "$(cat ./ansible/install.sh)"
 
-      - name: Setup PATH for Ansible
+      - name: Ensure Ansible is in PATH
         if: runner.os == 'Windows'
         run: |
           echo "$(wslpath -w ${HOME}/.local/bin)" >> "${GITHUB_PATH}"
@@ -46,4 +47,8 @@ jobs:
       - name: Verify Ansible installation
         run: |
           ansible --version
+
+      - name: Verify Ansible configuration
+        run: |
           ansible localhost -m ping
+          ansible localhost -m command -a "echo \"Hello from Ansible on $(uname -a)\""
