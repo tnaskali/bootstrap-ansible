@@ -36,7 +36,12 @@ jobs:
 
       - name: Install Ansible
         run: |
-          /bin/bash -c "$(cat ./ansible/install.sh)"
+          /usr/bin/env sh -c "$(cat ./ansible/install.sh)"
+
+      - name: Setup PATH for Ansible
+        if: runner.os == 'Windows'
+        run: |
+          echo "$(wslpath -w ${HOME}/.local/bin)" >> "${GITHUB_PATH}"
 
       - name: Verify Ansible installation
         run: |

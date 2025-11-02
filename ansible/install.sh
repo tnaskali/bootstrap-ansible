@@ -12,18 +12,6 @@ abort() {
   exit 1
 }
 
-reload_shell_profile() {
-  if [ -f "$HOME/.bash_profile" ]; then
-    . "$HOME/.bash_profile"
-  elif [ -f "$HOME/.zprofile" ]; then
-    . "$HOME/.zprofile"
-  elif [ -f "$HOME/.profile" ]; then
-    . "$HOME/.profile"
-  else
-    abort "❌ Could not find a shell profile to reload."
-  fi
-}
-
 # Check for Python3
 if ! command -v python3 >/dev/null 2>&1; then
   abort "❌ Python3 not found. It is required to install ansible."
@@ -42,12 +30,5 @@ python3 -m pipx ensurepath --force
 
 echo "📦 Installing ansible using pipx..."
 python3 -m pipx install --include-deps --force ansible
-
-# Force reload of shell profile to ensure PATH is updated for this session
-reload_shell_profile
-
-if ! command -v ansible >/dev/null 2>&1; then
-  abort "❌ ansible not found."
-fi
 
 echo "✅ Ansible was installed successfully."
