@@ -28,12 +28,6 @@ users:
     groups: [sudo]
     sudo: ALL=(ALL) NOPASSWD:ALL
     shell: /bin/bash
-  - name: ansible
-    gecos: Ansible User
-    primary_group: ansible
-    groups: [sudo]
-    sudo: ALL=(ALL) NOPASSWD:ALL
-    shell: /bin/bash
 
 write_files:
   - path: /etc/wsl.conf
